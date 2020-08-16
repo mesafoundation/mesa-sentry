@@ -1,26 +1,26 @@
 const Sentry = require('@sentry/node')
 
-function parseConfig(config) {
-  if(!config)
-    return 'No config found'
-  else if(!config.dsn)
-    return 'No DSN found in Config'
-
-  return null
-}
+const { parseConfig, empty, prefix } = require('./utils')
 
 function SentryMiddleware(config) {
   const _error = parseConfig(config)
   if(_error) {
-    console.warn('[mesa-sentry]', _error)
-    console.warn('[mesa-sentry] Middleware disabled')
+    console.warn(prefix, _error)
+    console.warn(prefix, 'Middleware disabled')
 
-    return () => {}
+    return empty
   }
 
-  Sentry.init({
-    ...config
-  })
+  try {
+    Sentry.init({
+      ...config
+    })
+  } catch(error) {
+    console.warn(prefix, error)
+    console.warn(prefix, 'Middleware disabled')
+
+    return empty
+  }
 
   return server => {
     return {
