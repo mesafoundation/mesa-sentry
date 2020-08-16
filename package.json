@@ -1,0 +1,12 @@
+{
+  "name": "mesa-sentry",
+  "version": "1.0.0",
+  "description": "Mesa middleware for Sentry",
+  "main": "index.js",
+  "repository": "https://github.com/BossCalifornia/mesa-sentry.git",
+  "author": "William Gibson <william@tired.io>",
+  "license": "MIT",
+  "dependencies": {
+    "@sentry/node": "^5.21.1"
+  }
+}
