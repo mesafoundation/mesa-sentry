@@ -4,7 +4,8 @@ Sentry middleware for Mesa
 ## Installation
 ```
 npm install --save mesa-sentry
-
+```
+```
 yarn add mesa-sentry
 ```
 
