@@ -25,7 +25,20 @@ function SentryMiddleware(config) {
   return server => {
     return {
       onError(error, client) {
-        Sentry.captureException(error)
+        Sentry.configureScope(scope => {
+          scope.setTag('client_facing', client ? 'yes' : 'no')
+
+          if(client) {
+            if(client.authenticated)
+              scope.setTag('client_id', client.id)
+
+            scope.setTag('authenticated', client.authenticated ? 'yes' : 'no')
+          }
+
+          Sentry.captureException(error)
+
+          scope.clear()
+        })
       }
     }
   }
